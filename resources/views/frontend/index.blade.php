@@ -30,7 +30,8 @@
                                             <a href="#!">news</a>
                                         </li>
                                     </ul>
-                                    <h2 class="h1"><a class="post-title" href="{{ route('single') }}">Is it Ethical to Travel
+                                    <h2 class="h1"><a class="post-title" href="{{ route('single') }}">Is it Ethical to
+                                            Travel
                                             Now?
                                             With that Freedom Comes Responsibility.</a></h2>
                                     <p class="card-text">Heading Here is example of hedings. You can use this heading by
