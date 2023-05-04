@@ -24,7 +24,6 @@
         <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
             <a href="{{ route('backend.dashboard') }}" class="d-lg-none">
                 <img alt="Logo" src="{{ asset(setting('company_logo_small')) }}" class="h-30px" />
-
             </a>
         </div>
         <!--end::Mobile logo-->
@@ -45,8 +44,6 @@
                 <!--begin::Theme mode-->
                 <div class="app-navbar-item ms-1 ms-lg-3">
                     <!--begin::Menu toggle-->
-                    
-
                 </div>
                 <!--end::switch account-->
 
@@ -248,7 +245,7 @@
                         <!--end::Menu separator-->
                         <!--begin::Menu item-->
                         <div class="menu-item px-5">
-                            <a href="#" class="menu-link px-5">My
+                            <a href="{{ route('backend.profile') }}" class="menu-link px-5">My
                                 Profile</a>
                         </div>
                         <!--end::Menu item-->

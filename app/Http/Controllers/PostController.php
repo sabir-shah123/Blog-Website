@@ -6,20 +6,22 @@ use App\Models\Post;
 
 class PostController extends Controller
 {
-    public function index()
+    public function list()
     {
         $posts = Post::latest()->get();
-        return view('backend.posts.index');
+        $page_title = 'Posts';
+        return view('backend.posts.list', compact('posts','page_title'));
     }
 
-    public function create()
+    public function add()
     {
-        return view('backend.posts.create');
+        $page_title = 'Create Post';
+        return view('backend.posts.add', compact('page_title'));
     }
 
     public function store()
     {
-        return redirect()->route('post.index');
+        return redirect()->route('backend.post.list');
     }
 
     public function edit()
@@ -29,11 +31,11 @@ class PostController extends Controller
 
     public function update()
     {
-        return redirect()->route('post.index');
+        return redirect()->route('backend.post.index');
     }
 
     public function destroy()
     {
-        return redirect()->route('post.index');
+        return redirect()->route('backend.post.index');
     }
 }

@@ -74,6 +74,18 @@
                     </a>
                 </div>
 
+                {{-- categories --}}
+                <div class="menu-item">
+                    <a class="menu-link" href="{{ route('backend.post.list') }}">
+                        <span class="menu-icon">
+                            <span class="svg-icon svg-icon-2">
+                                <i class="fa fa-list-alt"></i>
+                            </span>
+                        </span>
+                        <span class="menu-title"> Posts </span>
+                    </a>
+                </div>
+
                 <div class="menu-item">
                     <a class="menu-link" href="{{ route('backend.setting.list') }}">
                         <span class="menu-icon">

@@ -1,36 +1,67 @@
-@extends('backend.layouts.master')
+@php
+    $breadcrumb = [['name' => 'Dashboard', 'url' => route('backend.dashboard')], ['name' => $page_title ?? '', 'url' => '#']];
+@endphp
+@extends('layouts.backend')
 
-@section('main-content')
+@section('css')
 
-<div class="card">
-    <h5 class="card-header">Edit Post Category</h5>
-    <div class="card-body">
-      <form method="post" action="{{route('post-category.update',$postCategory->id)}}">
-        @csrf 
-        @method('PATCH')
-        <div class="form-group">
-          <label for="inputTitle" class="col-form-label">Title</label>
-          <input id="inputTitle" type="text" name="title" placeholder="Enter title"  value="{{$postCategory->title}}" class="form-control">
-          @error('title')
-          <span class="text-danger">{{$message}}</span>
-          @enderror
-        </div>
+@endsection
+@section('title', $page_title)
+@section('page-title', $page_title)
+@section('content')
 
-        <div class="form-group">
-          <label for="status" class="col-form-label">Status</label>
-          <select name="status" class="form-control">
-            <option value="active" {{(($postCategory->status=='active') ? 'selected' : '')}}>Active</option>
-            <option value="inactive" {{(($postCategory->status=='inactive') ? 'selected' : '')}}>Inactive</option>
-          </select>
-          @error('status')
-          <span class="text-danger">{{$message}}</span>
-          @enderror
-        </div>
-        <div class="form-group mb-3">
-           <button class="btn btn-success" type="submit">Update</button>
-        </div>
-      </form>
+    <div class="row">
+        <form action="{{ route('backend.category.save',$category->id) }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <div class="col-md-6 mx-auto">
+                <div class="card card-xxl-stretch-50 mb-5 mb-xl-10">
+                    <!--begin::Body-->
+                    <div class="card-body pt-5">
+                        <div class="row">
+                            {{-- parent --}}
+                            <div class="col-md-12 my-2">
+                                <div class="form-group">
+                                    <label for="name" class="py-2">Select Parent</label>
+                                    <select name="parent_id" id="parent_id" class="form-control" data-control="select2">
+                                        <option value="">Select Parent</option>
+                                        @foreach ($categories as $cat)
+                                            <option value="{{ $cat->id }}" {{ $cat->id == $category->id ? 'selected' : '' }}>{{ $cat->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 my-2">
+                                <div class="form-group">
+                                    <label for="name" class="py-2">Category Name</label>
+                                    <input type="text" name="name" id="name" class="form-control"
+                                        value="{{ old('name',$category->name??"") }}">
+                                </div>
+                            </div>
+
+                            {{-- image --}}
+                            <div class="col-md-12 my-2">
+                                <div class="form-group">
+                                    <label for="name" class="py-2">Category Image</label>
+                                    <input type="file" name="image" id="image" class="form-control dropify"
+                                        data-default-file="{{ asset($category->image??'') }}">
+                                </div>
+                            </div>
+                            <div class="col-md-12 my-2">
+                                <div class="form-group">
+                                    <input type="submit" class="btn btn-primary" value="Save" style="float:right">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end::Body-->
+                </div>
+            </div>
+        </form>
     </div>
-</div>
 
+@endsection
+
+@section('js')
 @endsection

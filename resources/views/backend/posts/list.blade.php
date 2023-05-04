@@ -12,7 +12,8 @@
 
     <div class="row">
         <div class="col-md-12 text-right py-2">
-            <a href="{{ route('backend.category.add') }}" class="btn btn-primary  py-3" style="float: right">Add {{ $page_title??'New' }}</a>
+            <a href="{{ route('backend.post.add') }}" class="btn btn-primary  py-3" style="float: right">Add
+                {{ $page_title ?? 'New' }}</a>
         </div>
         <div class="col-md-12 mx-auto">
             <div id="expbuttons"></div>
@@ -22,7 +23,7 @@
                     <table id="kt_datatable" class="table table-row-bordered gy-5">
                         <thead>
                             @php
-                                $table_fields = ['Name', 'Parent', 'Status', 'Action'];
+                                $table_fields = ['Cover', 'Title', 'Category', 'Created By', 'Published', 'Last Modified', 'Action'];
                             @endphp
                             <tr class="fw-semibold fs-6 text-muted">
                                 @foreach ($table_fields as $field)
@@ -32,20 +33,27 @@
                         </thead>
                         <tbody>
 
-                            @foreach ($categories as $key => $data)
+                            @foreach ($posts as $key => $data)
                                 <tr>
-                                    <td>{{ $data->name }}</td>
-                                    <td>{{ $data->parent->name ?? '' }}</td>
+                                    <td>
+                                        <img src="{{ asset($data->cover->image) }}" alt="" width="100px">
+                                    </td>
+                                    <td>{{ $data->title }}</td>
+                                    <td>{{ $data->category->name ?? '' }}</td>
+                                    <td>{{ $data->createdBy->name ?? '' }}</td>
                                     <td>
                                         <span
-                                            class="badge badge-{{ $data->status ? 'success' : 'danger' }}">{{ $data->status ? 'Active' : 'Inactive' }}</span>
+                                            class="badge badge-{{ $data->published ? 'success' : 'danger' }}">{{ $data->status ? 'Published' : 'Draft' }}</span>
                                     </td>
                                     <td>
-                                        <a href="{{ route('backend.category.status', $data->id) }}"
-                                            class="btn btn-sm btn-{{ $data->status?'danger':'success' }}">Status</a>
-                                        <a href="{{ route('backend.category.edit', $data->id) }}"
+                                        {{ $data->updated_at->format('d M Y') }}
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('backend.post.status', $data->id) }}"
+                                            class="btn btn-sm btn-{{ $data->status ? 'danger' : 'success' }}">Status</a>
+                                        <a href="{{ route('backend.post.edit', $data->id) }}"
                                             class="btn btn-sm btn-primary">Edit</a>
-                                        <a href="{{ route('backend.category.delete', $data->id) }}"
+                                        <a href="{{ route('backend.post.delete', $data->id) }}"
                                             class="btn btn-sm btn-danger">Delete</a>
                                     </td>
                                 </tr>

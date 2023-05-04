@@ -24,19 +24,18 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $page_title = 'Edit Category';
-        $categories = Category::query();
-        $category = $categories->where('id', $id)->firstOrFail();
-        $categories = $categories->where('id', '!=', $id)->latest()->get();
+        $categories = Category::where('id', '!=', $id)->latest()->get();
+        $category = Category::findOrFail($id);
         return view('backend.category.edit', compact('page_title', 'category', 'categories'));
     }
 
     public function save(Request $request, $id = null)
     {
-        $slug = Str::slug($request->name);
+
         $request->validate([
             'name' => 'required',
         ]);
-
+        $slug = Str::slug($request->name);
         if (Category::where('slug', $slug)->where('id', '!=', $id)->exists()) {
             return redirect()->back()->with('error', 'Please try with some different name');
         }
@@ -46,11 +45,26 @@ class CategoryController extends Controller
             [
                 'name' => $request->name,
                 'slug' => $slug,
-                'parent_id' => $request->parent_id,
+                'parent_id' => $request->parent_id ?? null,
                 'image' => $request->image ? uploadFile($request->image, 'uploads/category', 'category_' . time()) : null,
             ]
         );
         return redirect()->route('backend.category.list')->with('success', 'Category saved successfully');
+    }
+
+    public function delete($id)
+    {
+        $category = Category::findOrFail($id);
+        $category->delete();
+        return redirect()->back()->with('success', 'Category deleted successfully');
+    }
+
+    public function status($id)
+    {
+        $category = Category::findOrFail($id);
+        $category->status = !$category->status;
+        $category->save();
+        return redirect()->back()->with('success', 'Category status updated successfully');
     }
 
 }

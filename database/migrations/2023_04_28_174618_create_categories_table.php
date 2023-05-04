@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('parent_id')->nullable()->constrained('categories')->onDelete('cascade');
+            $table->foreignId('parent_id')->nullable();
             $table->string('slug')->unique();
             $table->boolean('status')->default(true)->comment('true = active, false = inactive');
             $table->string('image')->nullable();
